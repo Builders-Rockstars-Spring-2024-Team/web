@@ -1,112 +1,73 @@
-import Image from "next/image";
+"use client"
+
+import { Chat } from "./listings/chat";
+
+const Logo = () => (
+  <svg
+    viewBox="0 0 985 178"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className="w-62 md:w-90"
+  >
+    <path
+      d="M331.622 65.986h-21.834v84.171h22.329v-47.733c0-11.48 7.217-19.353 17.072-19.353 9.361 0 14.618 6.39 14.618 15.417v51.69h22.33V95.211c0-18.384-11.65-31.492-29.051-31.492-11.485 0-19.196 4.76-24.948 13.788h-.495V65.986h-.021zm104.885 86.644c21.01 0 35.463-10.181 35.463-27.081 0-19.683-15.587-23.619-29.711-26.587-11.979-2.453-23.133-3.112-23.133-10.346 0-6.08 5.752-9.357 14.453-9.357 9.526 0 15.258 3.277 16.247 12.304h20.185c-1.649-16.9-13.958-27.886-36.102-27.886-19.195 0-34.309 8.698-34.309 26.917 0 18.384 14.763 22.486 29.876 25.433 11.484 2.288 22.165 3.112 22.165 11.15 0 5.915-5.588 9.687-15.423 9.687-10.02 0-16.907-4.267-18.391-13.953h-20.68c1.278 17.91 14.907 29.719 39.36 29.719zm40.844-69.991h13.526v47.506c0 15.911 11.979 20.177 22.824 20.177 8.866 0 13.959-.33 13.959-.33v-16.405s-3.773.165-6.557.165c-4.928 0-8.371-2.123-8.371-8.368V82.639h14.453V65.986h-14.453V32.845h-21.834v33.14h-13.526V82.64h-.021zm200.141 69.991c21.175 0 35.628-17.23 35.628-44.456 0-26.257-15.093-44.455-36.267-44.455-11.65 0-18.887 5.42-23.464 12.469h-.495V32.845h-22.329v117.312h21.505v-10.49h.329c4.908 7.873 13.279 12.963 25.093 12.963zm-4.928-18.714c-12.474 0-20.185-9.851-20.185-25.267 0-15.582 5.258-26.917 19.36-26.917 12.474 0 18.722 10.82 18.722 26.422 0 16.261-6.413 25.762-17.897 25.762zM850.56 152.63c21.01 0 35.464-10.181 35.464-27.081 0-19.683-15.588-23.619-29.711-26.587-11.979-2.453-23.134-3.112-23.134-10.346 0-6.08 5.753-9.357 14.454-9.357 9.525 0 15.257 3.277 16.247 12.304h20.185c-1.649-16.9-13.959-27.886-36.102-27.886-19.196 0-34.309 8.698-34.309 26.917 0 18.384 14.763 22.486 29.876 25.433 11.484 2.288 22.164 3.112 22.164 11.15 0 5.915-5.587 9.687-15.422 9.687-10.021 0-16.907-4.267-18.392-13.953H811.2c1.279 17.91 14.907 29.719 39.36 29.719zm90.143 0c21.67 0 34.968-12.634 38.082-27.555h-22c-2.453 6.389-7.546 10.346-16.247 10.346-12.639 0-19.855-8.038-21.505-21.002h61.051c0-30.028-14.454-50.7-41.525-50.7-24.618 0-41.525 19.352-41.525 44.291.02 25.082 15.773 44.62 43.669 44.62zm-1.794-71.702c10.186 0 17.237 7.378 17.897 18.054h-37.422c1.959-11.005 7.69-18.054 19.525-18.054zm-324.117 69.229h-21.505V140.8c-4.268 6.389-10.35 11.315-24.783 11.315-17.237 0-29.381-9.027-29.381-25.762 0-18.549 15.093-24.444 33.814-27.082 13.959-1.958 20.35-3.112 20.35-9.522 0-6.08-4.763-10.016-14.123-10.016-10.495 0-15.587 3.771-16.247 11.81h-19.856c.66-14.758 11.65-27.721 36.268-27.721 25.278 0 35.463 11.315 35.463 31.018v55.317zm-21.01-42.312c-3.938 2.287-10.02 3.606-15.587 4.926-11.65 2.617-17.402 5.255-17.402 13.128s5.258 10.655 13.134 10.655c12.804 0 19.855-7.873 19.855-16.075v-12.634zm205.274 42.312h-21.504V140.8c-4.268 6.389-10.351 11.315-24.783 11.315-17.237 0-29.381-9.027-29.381-25.762 0-18.549 15.092-24.444 33.814-27.082 13.958-1.958 20.35-3.112 20.35-9.522 0-6.08-4.763-10.016-14.124-10.016-10.494 0-15.587 3.771-16.247 11.81h-19.855c.66-14.758 11.649-27.721 36.267-27.721 25.278 0 35.463 11.315 35.463 31.018v55.317zm-21.01-42.312c-3.938 2.287-10.02 3.606-15.587 4.926-11.649 2.617-17.402 5.255-17.402 13.128s5.258 10.655 13.134 10.655c12.804 0 19.855-7.873 19.855-16.075v-12.634zM272.18 150.157h22.33V65.986h-22.33v84.171zM282.922 29.63c-6.659 0-12.061 5.4-12.061 12.057s5.402 12.056 12.061 12.056c6.66 0 12.062-5.4 12.062-12.056 0-6.657-5.402-12.057-12.062-12.057zM4 171.88V65.986L210.285 7l5.896 20.63L25.463 82.166v68.281H197.09v-84.46h21.463V171.88H4z"
+      fill="#2892D7"
+    ></path>
+  </svg>
+);
+
+const LocationIcon = () => (
+  <svg
+    viewBox="0 0 18 21"
+    xmlns="http://www.w3.org/2000/svg"
+    className="centery-absolute absolute box-content h-4 w-4 fill-current pl-2 text-gray lg:pl-1"
+  >
+    <path
+      className="fill-current"
+      d="M9 10.825c.5 0 .93-.18 1.287-.537.359-.359.538-.788.538-1.288s-.18-.93-.537-1.287A1.756 1.756 0 009 7.175c-.5 0-.93.18-1.287.538A1.756 1.756 0 007.175 9c0 .5.18.93.538 1.287.358.359.787.538 1.287.538zM9 18.7c2.133-1.95 3.708-3.72 4.725-5.313C14.742 11.796 15.25 10.4 15.25 9.2c0-1.9-.604-3.45-1.813-4.65C12.23 3.35 10.75 2.75 9 2.75c-1.75 0-3.23.6-4.438 1.8C3.354 5.75 2.75 7.3 2.75 9.2c0 1.2.52 2.592 1.563 4.175C5.354 14.958 6.917 16.733 9 18.7zm0 2.175c-.15 0-.296-.02-.438-.063a1.043 1.043 0 01-.387-.212c-2.483-2.217-4.342-4.263-5.575-6.138C1.367 12.588.75 10.834.75 9.2c0-2.567.83-4.617 2.487-6.15C4.896 1.517 6.817.75 9 .75s4.104.767 5.762 2.3c1.659 1.533 2.488 3.583 2.488 6.15 0 1.633-.617 3.388-1.85 5.263-1.233 1.874-3.092 3.92-5.575 6.137-.117.1-.242.17-.375.212a1.505 1.505 0 01-.45.063z"
+    />
+  </svg>
+);
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <main className="flex min-h-screen flex-col items-center gap-3 p-4">
+      <section className="flex flex-col">
+        <div className="relative mt-8 flex flex-col items-center px-5 md:px-1 lg:mt-5">
+          <h1 className="text-primary text-lg md:text-2xl">
+            もう場所に、困らない。
+          </h1>
+          <div className="mt-4 md:mt-6"></div>
+          <Logo />
         </div>
-      </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
+      </section>
+      <div className="mt-1 md:mt-2"></div>
+      <div className="md:max-w-xl top-2.5 z-30 mx-auto w-full px-1 lg:top-1 lg:px-0">
+        <div
+          style={{ display: "inline-block" }}
+          className="h-full w-full relative block bg-white rounded-full"
         >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              window.location =
+                "https://www.instabase.jp/" + e.target.place.value;
+            }}
+            className="relative flex items-center overflow-hidden rounded-full border shadow border-gray"
+          >
+            <LocationIcon />
+            <input
+              type="text"
+              name="place"
+              placeholder="どこの市区町村・駅で探しますか？"
+              className="placeholder-truncate w-full truncate p-2 pl-6 text-black placeholder-gray"
+              role="combobox"
+              autoComplete="off"
+              autoFocus
+            />
+          </form>
+        </div>
+        <Chat />
       </div>
     </main>
   );
