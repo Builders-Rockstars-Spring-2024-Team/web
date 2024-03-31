@@ -1,8 +1,7 @@
 "use server";
 
 import { createCompletions } from "@/openai";
-import { title } from "process";
-import base64js from 'base64-js'
+import base64js from "base64-js";
 
 export type Listing = {
 	id: string;
@@ -47,13 +46,11 @@ export async function onFormPostAction(
 	const messages = state.messages.slice();
 	messages.push({ role: "user", content: payload.message });
 	const result = await createCompletions(messages);
-	// console.log(result.type === 'success' ? {spaces:result.spaces} : {spaces:[]})
 	const spaces = await Promise.all(
 		result.type === "success" ? result.spaces.map(getImage) : []
 	);
 	messages.push({
 		role: "assistant",
-		// content: 'test'
 		content: result.type === "error" ? "Failed. Sorry." : result.message!,
 		spaces: spaces.flatMap((res) =>
 			res.type === "success" ? [res.result] : []
@@ -105,7 +102,9 @@ async function getImage(space: string): Promise<ImageResponse> {
 			space,
 			image: {
 				mime: img.type,
-				data: base64js.fromByteArray(new Uint8Array(await img.arrayBuffer())),
+				data: base64js.fromByteArray(
+					new Uint8Array(await img.arrayBuffer())
+				),
 			},
 			title: spaceTitleMatch[1],
 			tagline: spaceTaglineMatch[1],

@@ -4,7 +4,7 @@ import { ChatCompletionAssistantMessageParam } from "openai/resources/index.mjs"
 export type CompletionResult =
     | { type: "error" }
     | { type: "success"; message: string; spaces: string[] };
-type Message = { content: string; role: "user" | "assistant", }
+type Message = { content: string; role: "user" | "assistant" };
 export const createCompletions = async (
     messages: readonly Readonly<Message>[]
 ): Promise<CompletionResult> => {
@@ -15,7 +15,13 @@ export const createCompletions = async (
     try {
         const response = await openai.chat.completions.create({
             model: "Your Room Finder",
-            messages: messages.map((msg: Message):ChatCompletionAssistantMessageParam => ({role:msg.role,content:msg.content} as ChatCompletionAssistantMessageParam)),
+            messages: messages.map(
+                (msg: Message): ChatCompletionAssistantMessageParam =>
+                    ({
+                        role: msg.role,
+                        content: msg.content,
+                    }) as ChatCompletionAssistantMessageParam
+            ),
         });
 
         const message = response.choices?.[0]?.message?.content;
@@ -23,12 +29,14 @@ export const createCompletions = async (
             return { type: "error" };
         }
 
-        const spaces = [];
+        const spaces: string[] = [];
         let match;
         const re = /\(https:\/\/www\.instabase\.jp\/space\/(\d+)\)/g;
         while (null !== (match = re.exec(message))) {
             const [, space] = match;
-            spaces.push(space);
+            if (!spaces.includes(space)) {
+                spaces.push(space);
+            }
         }
 
         return {
@@ -37,7 +45,7 @@ export const createCompletions = async (
             spaces,
         };
     } catch (e) {
-        console.error(e)
+        console.error(e);
         return { type: "error" };
     }
 };
