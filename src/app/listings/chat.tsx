@@ -163,15 +163,25 @@ const ChatMessage = forwardRef(function ChatMessage(
 });
 
 function ChatSpace(space: TChatSpace) {
-  return (
-    <li className="flex gap-1 shadow bg-gray-light">
-      <a href={'https://www.instabase.jp/space/' + space.space} style={{display:'contents'}}>
-      <img className="w-[128px] h-[128px] rounded p-1" src={URL.createObjectURL(new Blob([base64js.toByteArray(space.image.data)], {type: space.image.mime}))} />
-      <div className="flex flex-col p-1">
-        <span className="text-base">{space.title}</span>
-        <span className="text-sm text-gray-dark">{space.tagline}</span>
-      </div>
-      </a>
-    </li>
-  );
+	return (
+		<li className="flex gap-1 shadow bg-gray-light">
+			<a
+				href={"https://www.instabase.jp/space/" + space.space}
+				style={{ display: "contents" }}
+			>
+				<img
+					className="w-[128px] h-[128px] rounded p-1"
+					src={URL.createObjectURL(
+						new Blob([base64js.toByteArray(space.media.data)], {
+							type: space.media.mime,
+						}),
+					)}
+				/>
+				<div className="flex flex-col p-1">
+					<span className="text-base">{space.title}</span>
+					<span className="text-sm text-gray-dark">{space.tagline}</span>
+				</div>
+			</a>
+		</li>
+	);
 }

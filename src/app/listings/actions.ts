@@ -47,7 +47,7 @@ export async function onFormPostAction(
 	messages.push({ role: "user", content: payload.message });
 	const result = await createCompletions(messages);
 	const spaces = await Promise.all(
-		result.type === "success" ? result.spaces.map(getImage) : []
+		result.type === "success" ? result.spaces.map(getMedia) : [],
 	);
 	messages.push({
 		role: "assistant",
@@ -65,7 +65,7 @@ export async function onFormPostAction(
 
 export type ChatSpace = {
 	space: string;
-	image: { mime: string; data: string };
+	media: { mime: string; data: string; type: "image" | "video" };
 	title: string;
 	tagline: string;
 };
@@ -96,18 +96,39 @@ async function getImage(space: string): Promise<ImageResponse> {
 	const spaceImageResponse = await fetch(spaceImageMatch[1]);
 	// TODO: Process image
 	const img = await spaceImageResponse.blob();
-	return {
-		type: "success",
-		result: {
-			space,
-			image: {
-				mime: img.type,
-				data: base64js.fromByteArray(
-					new Uint8Array(await img.arrayBuffer())
-				),
-			},
-			title: spaceTitleMatch[1],
-			tagline: spaceTaglineMatch[1],
+	// Call the API to process the image
+	const modalProfile = process.env.MODAL_PROFILE;
+	const formData = new FormData();
+	formData.append("image", img, "image.png");
+	const apiResponse = await fetch(
+		`https://${modalProfile}--comfycustomapi-api-dev.modal.run/image_to_video?prompt=Workers%20wearing%20white%20shirts`,
+		{
+			method: "POST",
+			body: formData,
 		},
-	};
+	);
+	if (apiResponse.ok) {
+		const processedMedia = await apiResponse.blob();
+		const mediaType = processedMedia.type.startsWith("image") ? "image" : "video";
+		return {
+			type: "success",
+			result: {
+				space,
+				media: {
+					type: mediaType,
+					mime: processedMedia.type,
+					data: base64js.fromByteArray(
+						new Uint8Array(await processedMedia.arrayBuffer()),
+					),
+				},
+				title: spaceTitleMatch[1],
+				tagline: spaceTaglineMatch[1],
+			},
+		};
+	} else {
+		console.error("Error calling the API:", apiResponse.statusText);
+		return {
+			type: "error",
+		};
+	}
 }
